@@ -1,0 +1,595 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{polski}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\selectlanguage{polish}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsmath, amsthm}
+%\usepackage{wmstitle_lic}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{enumerate}
+\usepackage{pdfpages}
+\usepackage[labelsep=period]{caption}
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+%\renewcommand{\cftdot}{.} %zamiast kropki możemy wstawić cokolwiek, między tytułem rozdziału a numerem strony będą (w tym przypadku) kropki
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\newenvironment{solution}
+  {\renewcommand\qedsymbol{$\diamondsuit$}\begin{proof}[Rozwiązanie]}
+  {\end{proof}}
+
+
+\newtheorem{twr}{Twierdzenie}[section]
+\newtheorem{lem}[twr]{Lemat}
+\newtheorem{definition}[twr]{Def}
+\newtheorem{uw}[twr]{Uwaga}
+\newtheorem{ex}{Przykład}[section]
+\newtheorem{exs}[ex]{Przykład}
+\newtheorem{hp}[twr]{Hipoteza}
+\newtheorem{obs}[twr]{Obserwacja}
+\newtheorem{wn}[twr]{Wniosek}
+\newtheorem{wl}{Własność}[section]
+\numberwithin{equation}{section}
+\begin{document}
+\includepdf[pages={1,2}]{Okladka_lic.pdf}
+\includepdf[pages={1}]{Recenzja_lic.pdf}
+
+\tableofcontents
+
+ \addtocontents{toc}{\protect\hfill{}\textbf{strona}\par}
+ 
+\newpage
+\section*{Wstęp}
+\addcontentsline{toc}{section}{Wstęp}
+\paragraph{}
+\indent
+Tematem mojej pracy są różniczkowania lokalnie nilpotentne pierścieni wielomianów. Podzieliłam ją na trzy rozdziały.\\
+\indent W pierwszym rozdziale zaprezentuję podstawowe pojęcia, których znajomość będzie niezbędna w kolejnych rozdziałach, tzn. pojęciami pierścienia, ciała oraz ich elementami. Wprowadzę także umowne oznaczenia na działania na elementach pierścienia bądź ciała, które zastosuję w dalszej części pracy.\\
+\indent W rozdziale drugim przedstawię definicję różniczkowania jako odwzorowania określonego na pierścieniu przemiennym z jedynką, oraz pojęcia różniczkowania lokalnie nilpotentnego. Wymienię i wykażę własności różniczkowań, a następnie przytoczę przykłady odwzorowań, które są różniczkowaniami. Tutaj zauważymy, że znana wszystkim funkcja pochodna z wielomianu jednej zmiennej o współczynnikach rzeczywistych jest w istocie różniczkowaniem, gdyż w Przykładzie 2.1 za $R$ możemy przyjąć ciało liczb rzeczywistych. Na końcu rozdziału znajdą się twierdzenia związane z różniczkowaniami lokalnie nilpotentnymi na dowolnym pierścieniu przemiennym z jedynką.\\
+\indent
+ Ostatni rozdział dotyczył będzie różniczkowań lokalnie nilpotentnych określonych na pierścieniach wielomianów. Wprowadzę  
+tam pojęcie różniczkowania trójkątnego i udowodnię, że jest ono lokalnie nilpotentne. Pozostałą część rozdziału stanowiły będą twierdzenia przedstawiające ogólną postać dowolnego $R$-różniczkowania oraz różniczkowania lokalnie nilpotentnego na pierścieniu wielomianów jednej zmiennej. Przytoczę również treść twierdzenia o ogólnej postaci różniczkowania lokalnie nilpotentnego pierścienia wielomianów dwóch zmiennych.
+
+
+\newpage
+\section{Pierścienie, ciała i pierścienie wielomianów}
+
+\subsection{Pierścienie i ciała}
+
+\begin{definition} \normalfont
+ Trójkę $(A,+,*)$, gdzie $+$,$*$ są działaniami w zbiorze $A \neq \emptyset$ nazywamy pierścieniem, jeśli spełnione są warunki:
+    \begin{flushleft}
+     0)\:
+        Wewnętrzność $+$: dla dowolnych $a,b \in A$ mamy $a+b \in A$, \newline
+     1)\:
+     	Łaczność $+$: dla dowolnych $a,b,c \in A$ mamy $(a+b)+c=a+(b+c)$, \newline
+     2)\:
+     Istnienie elementu neutralnego względem $+$: istnieje dokładnie jeden $e \in A $ taki, że dla dowolnego $a \in A$ zachodzi $a+e=e+a=a$, \newline
+     3)\:
+     Dla dowolnego $a\in A $ istnieje $a' \in A$ taki, że $a+a'=a'+a=e$, \newline
+     4)\:
+    Przemienność $+$: dla dowolnych $a,b \in A$ mamy $a+b=b+a$, \newline
+     5)\:
+     Wewnętrzność $*$: dla dowolnych $a,b \in A$ mamy $a*b \in A$, \newline
+     6)\:
+     Łączność $*$: dla dowolnych $a,b,c \in A$ mamy $(a*b)*c=a*(b*c)$, \newline
+     7)\:
+     Rozdzielność $*$ względem $+$: dla dowolnych $a,b,c \in A$ mamy $(a+b)*c=a*c+b*c$ oraz $a*(b+c)=a*b+a*c$.
+    \end{flushleft}
+\end{definition}
+
+Jeśli spełnione są warunki 0)-4), mówimy, że $(A,+)$ jest grupą abelową. 
+\\\indent
+Działanie $+$ nazywamy działaniem addytywnym. Element neutralny względem działania addytywnego oznaczać będę przez $\textbf{0}$, zaś element symetryczny elementu $a$ względem tego samego działania będzie zapisywany jako $-a$.
+Działanie $*$ nazywamy działaniem multiplikatywnym. 
+
+\begin{definition} \normalfont
+ Trójkę $(A,+,*)$ nazywamy pierścieniem przemiennym, jeśli jest pierścieniem oraz zachodzi przemienność $*$:
+    \begin{flushleft}
+  8)\:  dla dowolnych $a,b \in A$ mamy $a*b=b*a$.
+    \end{flushleft}
+\end{definition}
+
+\begin{definition} \normalfont
+ Trójkę $(A,+,*)$ nazywamy pierścieniem z jedynką, jeśli jest pierścieniem oraz:
+    \begin{flushleft}
+  9)\: Istnieje dokładnie jeden $e \in A$ taki, że dla dowolnego $a \in A$ mamy $a*e=e*a=a$.
+    \end{flushleft}
+\end{definition}
+
+Jeśli pierścień jest jednocześnie pierścieniem przemiennym i pierścieniem z jedynką, to mówimy, że jest pierścieniem przemiennym z jedynką. 
+\\Element z 9) nazywamy elementem neutralnym względem $*$ oznaczę przez $\textbf{1}$.
+
+
+
+\begin{definition} \normalfont
+ Niech $(A,+,*)$ będzie pierścieniem, $B \subset A$. Wówczas trójkę  $(B,+,*)$ nazywamy podpierścieniem pierścienia $A$, jeśli:
+    \begin{flushleft}
+1)\: dla dowolnych $a,b \in B$ mamy $a-b \in B$,\newline
+2)\: dla dowolnych $a,b \in B$ mamy $a*b \in B$.
+    \end{flushleft}
+\end{definition}
+
+Jeżeli $(A,+,*)$ będzie pierścieniem z jedynką, gdzie $\textbf{1}$ jest jedynką pierścienia A, zaś $B$ jest podpierścieniem pierścienia A oraz $\textbf{1} \in B$, to mówimy, że B jest podpierścieniem z jedynką pierścienia A.
+
+
+\begin{definition} \normalfont
+ Niech $(A,+,*)$ będzie pierścieniem z jedynką. Element $a \in A$ nazywamy elementem odwracalnym, jeżeli istnieje $b \in A$ takie, że $a*b=b*a=\textbf{1}$.
+\end{definition}
+
+\begin{definition} \normalfont
+Niech $(A,+,*)$ będzie pierścieniem. Element $a \in A \setminus \{ \textbf{0}\}$ nazywamy dzielnikiem zera, jeśli istnieje $b \in A \setminus \{ \textbf{0} \}$ takie, że $a*b=\textbf{0}$.
+\end{definition}
+
+\begin{definition} \normalfont
+Pierścieniem całkowitym nazywamy pierścień przemienny z jedynką i bez dzielników zera.
+\end{definition}
+
+
+\begin{definition} \normalfont
+Niech $A,R$ będą pierścieniami. $A$ nazywamy $R$-algebrą, jeśli, $R$ jest podpierścieniem pierścienia $A$.
+\end{definition}
+
+
+\begin{definition} \normalfont
+Pierścień przemienny z jedynką $(\mathbb{K},+,*)$ nazywamy ciałem, jeśli :
+    \begin{flushleft}
+dla dowolnego $x \in \mathbb{K} \setminus \lbrace \textbf{0} \rbrace$ istnieje $x' \in \mathbb{K}$ taki, że $x*x'=x'*x=\textbf{1}$.
+    \end{flushleft}
+\end{definition}
+
+Jeśli dla danego elementu $a$ istnieje $a' \in A$ taki, że $a*a'=a'*a=\textbf{1}$, to $a'$ nazywamy elementem odwrotnym do elementu $a$ względem $*$ i oznaczamy $a^{-1}$ lub ${\frac{1}{a}}$.
+
+
+\begin{definition} \normalfont
+Niech $(\mathbb{K},+,*)$ będzie ciałem, $\mathbb{A} \subset \mathbb{K}$. Wówczas $(\mathbb{A},+,*)$ nazywamy podciałem ciała $(\mathbb{K},+,*)$, jeśli $(\mathbb{A},+,*)$ jest ciałem.
+\end{definition}
+
+
+\begin{definition} \normalfont
+Niech $(A,+,*)$ będzie pierścieniem, $n \in \mathbb{Z}$, $a \in A$. Wówczas
+\\$$n \cdot a= \left\{ \begin{array}{ll}
+
+\textbf{0} & \textrm{gdy $n = 0$}
+\\
+a & \textrm{gdy $n=1$}
+\\
+(n-1) \cdot a + a & \textrm{gdy $n>1$}
+\\
+-(-n) \cdot a & \textrm{gdy $n<0$}
+\end{array} \right.$$
+\\Gdy $n \geq 0$, to
+\\$$a^{n}= \left\{ \begin{array}{ll}
+\textbf{1} & \textrm{gdy $n = 0$}
+\\
+a^{n-1}*a & \textrm{gdy $n > 0$}
+\\
+
+\end{array} \right.$$.
+\end{definition}
+
+\begin{definition} \normalfont
+Niech $(A,+,*)$ będzie pierścieniem. Element $a \in A$ nazywamy elementem nilpotentnym pierścienia $A$, jeśli:
+    \begin{flushleft}
+istnieje $n \in \mathbb{N}$ takie, że $a^{n}=\textbf{0}$.
+    \end{flushleft}
+\end{definition}
+
+%HOMOMORFIZM
+%\begin{definition}
+%Niech $(A,+,*)$, $(B,\oplus ,\odot )$ będą pierścieniami. Odwzorowanie $h: A\mapsto B$ nazywamy homomorfizmem pierścienia $A$ w pierścień $B$, jeśli  dla dowolnych elementów $a,b$ pierścienia $A$ zachowane są następujące własności:
+%\begin{flushleft}
+%1) $h(a+b)=h(a)\oplus h(b)$,\\
+%2) $h(a*b)=h(a)\odot h(b)$.
+%\end{flushleft}
+%Jeśli $A,B$ są pierścieniami z jedynką, to dodatkowo musi zachodzić:\\
+%3) $h(\textbf{1}_A)=\textbf{1}_B$,
+%\\gdzie $\textbf{1}_A,\textbf{1}_B$ są jedynkami pierścienia $A$ i $B$.
+%\end{definition}
+
+%\begin{definition}
+%Niech $A$ będzie pierścieniem przemiennym z jedynką. Charakterystyką pierścienia $A$ nazywamy liczbę naturalną opisaną następująco:
+%\\$$Char(A)= \left\{ \begin{array}{ll}
+%\min \{ n\in \mathbb{N}, n>0: n\cdot \textbf{1}=\textbf{0}\} & \textrm{gdy $\{ n\in \mathbb{N}, n>0: n\cdot \textbf{1}=%\textbf{0}\} \neq \emptyset$},
+%\\
+%0 & \textrm{w przeciwnym przypadku}.
+%\end{array} \right.$$
+%lub równoważnie:
+%\\niech $Z=\{ n\in \mathbb{N}, n>0 : \exists a\in A, a\neq \textbf{0}$ $n\cdot a=\textbf{0}\}$
+%\\$$Char(A)= \left\{ \begin{array}{ll}
+%\min\limits_Z & \textrm{gdy $Z \neq \emptyset$},
+%\\
+%0 & \textrm{w przeciwnym przypadku}.
+%\end{array} \right.$$
+%\end{definition}
+
+%\begin{uw}
+%Jeśli $A$ jest pierścieniem przemiennym z jedynką, a $B$ jego podpierścieniem z jedynką i $Char(B)=0$, to $Char(A)=0$.
+%\end{uw}
+
+%\subsection{Pierścienie wielomianów} - ja bym nie robiła
+
+
+
+\newpage
+\section{Różniczkowania pierścieni przemiennych}
+\subsection{Podstawowe własności i przykłady różniczkowań}
+
+\begin{definition} \normalfont
+Odwzorowanie $D: A \mapsto A$ nazywamy różniczkowaniem, gdy:
+    \begin{flushleft}
+1)\: dla dowolnych $a,b$ należących do $A$ mamy $D(a+b)=D(a)+D(b)$, \newline
+2)\: dla dowolnych $a,b$ należących do $A$ mamy (tzw. reguła Leibniza) $D(a*b)=a*D(b)+D(a)*b$.
+    \end{flushleft}
+\end{definition}
+
+Zbiór wszystkich różniczkowań pierścienia $A$ oznaczamy $Der(A)$.
+
+\begin{definition} \normalfont
+Niech $A$ będzie pierścieniem przemiennym z jedynką, a $B$ jego podpierścieniem z jedynką. Odwzorowanie $D \in DerA$ nazywamy $B$-różniczkowaniem, gdy dla dowolnego $a$ należącego do $B$ mamy $D(a)=0$.
+\end{definition}
+
+Zbiór wszystkich $B$-różniczkowań pierścienia $A$ oznaczamy $Der_{B}(A)$.
+\\\\ \indent
+Poniżej przedstawię najważniejsze własności różniczkowań. Niech $A$ będzie dowolnym pierścieniem przemiennym z jedynką, $\textbf{0}$ - elementem neutralny $A$ względem $+$, $\textbf{1}$ - elementem neutralnym $A$ względem $*$, $D$ - dowolnym różniczkowaniem określonym na $A$.
+%W1
+\begin{wl}
+$D(\textbf{0})=\textbf{0}$.
+\end{wl}
+\begin{proof}
+ Z własności elementu neutralnego: $\textbf{0}=\textbf{0}+\textbf{0}$, zatem
+$D(\textbf{0})=D(\textbf{0}+\textbf{0})$, następnie korzystamy z addytywności różniczkowania: $D(\textbf{0})=D(\textbf{0}+\textbf{0})=D(\textbf{0})+D(\textbf{0})$. Po obustronnym dodaniu $-D(\textbf{0})$ otrzymujemy tezę.
+\end{proof}
+%W2
+\begin{wl}
+$D(\textbf{1})=\textbf{0}$.
+\end{wl}
+\begin{proof}Z własności elementu neutralnego względem mnożenia $\textbf{1}=\textbf{1}*\textbf{1}$. Następnie korzystamy z reguły Leibniza: $D(\textbf{1}*\textbf{1})=\textbf{1}*D(\textbf{1})+D(\textbf{1})*\textbf{1}=D(\textbf{1})+D(\textbf{1})$. Po obustronnym dodaniu $-D(\textbf{1})$ otrzymujemy tezę.
+\end{proof}
+%W3
+\begin{wl}
+Dla dowolnego $a \in A$ zachodzi: $D(\textbf{-a})=-D(a)$.
+\end{wl}
+\begin{proof}
+Dla dowolnego $a \in A$ mamy: $\textbf{0}=a+(-a)$. Korzystając dodatkowo z addytywności $D$ otrzymujemy: 
+$D(\textbf{0})=D(a+(-a))=D(a)+D(-a)$. Dodajemy obustronnie element przeciwny do $D(a)$ względem dodawania, czyli $-D(a)$. W ten sposób otrzymujemy równość: $-D(a)=D(-a)$.
+\end{proof}
+%W4
+\begin{wl}
+Dla dowolnego $n \in \mathbb{N}$ mamy $D(n \cdot \textbf{1})=\textbf{0}$. 
+\end{wl}
+\begin{proof}
+Dla $n=1$ własność pokrywa się z Własnością 2.2. Załóżmy, że równość jest spełniona dla pewnego $n=k$, gdzie $k \in \mathbb{N}$. Dla $n=k+1$ mamy 
+$D((k+1)*\textbf{1})=D(k \cdot \textbf{1}+\textbf{1})=D(k \cdot \textbf{1})+D(\textbf{1})$. Korzystając z założenia indukcyjnego: $D(k \cdot \textbf{1})=\textbf{0}$ oraz z Własności 2.2 otrzymujemy  
+$D((k+1) \cdot \textbf{1})=\textbf{0}+\textbf{0}$.
+\end{proof}
+%W5
+\begin{wl}
+Dla dowolnego $n \in \mathbb{Z}$ mamy $D(n \cdot \textbf{1})=\textbf{0}$.
+\end{wl}
+\begin{proof}
+Dla  $n \in \mathbb{N}$ korzystamy bezpośrednio z Własności 2.4. Jeśli \\$n \in \mathbb{Z_{-}}= \{ k \in \mathbb{Z}: k<0 \}$, to zauważamy, że $-n \in \mathbb{N}$.
+Korzystając z Własności 2.4 mamy:  $D((-n) \cdot \textbf{1})=\textbf{0}$. $(-n)*\textbf{1}+n \cdot \textbf{1}=\textbf{0}$, zatem 
+$n \cdot \textbf{1}$ jest elementem przeciwnym do $(-n)*\textbf{1}$. Korzystamy więc z Własności 2.3: $-D(n \cdot\textbf{1})=D((-n) \cdot \textbf{1})=\textbf{0}$.
+\end{proof}
+%W6
+\begin{wl}
+Dla dowolnego $b \in A$, $a \in U(A)$, gdzie $U(A)$ oznacza zbiór elementów odwracalnych pierścienia $A$ zachodzi: $D(\frac{b}{a})=\frac{D(b)*a-b*D(a)}{a^{2}}$.
+\end{wl}
+\begin{proof}
+Zauważmy, że $\frac{b}{a}*a=b* \frac{1}{a}*a=b$. Stąd $D(b)=D(\frac{b}{a}*a)=D(\frac{b}{a})*a+\frac{b}{a}*D(a)$, i dalej $D(\frac{b}{a})*a=D(b)-\frac{b}{a}*D(a)$. Po pomnożeniu obustronnym przez $\frac{1}{a}$ mamy:
+ $D(\frac{b}{a})=\frac{D(b)-\frac{b}{a}*D(a)}{a}=\frac{\frac{1}{a}*(a*D(b)-b*D(a))}{a}=\frac{D(b)*a-b*D(a)}{a*a}=\frac{D(b)*a-b*D(a)}{a^{2}}$.
+\end{proof}
+%W7
+\begin{wl}
+Niech $\mathbb{Q} \subset{A}$. Wtedy dla dowolnego $D \in Der(A)$, $w \in \mathbb{Q}$ zachodzi: $D(w)=\textbf{0}$.
+\end{wl}
+\begin{proof}
+Niech $p,q \in \mathbb{Z}$ będą takie, że $w=\frac{p}{q}$. Wtedy $D(w)=D(\frac{p}{q})=\frac{D(p)*q-p*D(q)}{q^{2}}$. Z Własności 5 $D(p)=D(q)=0$, zatem $D(w)=0$.
+\end{proof}
+%W8
+\begin{wl}
+Niech $D \in Der(A)$. Wtedy zbiór: \\$Ker(A)=A^{D}= \{ a \in A: D(a)=0 \}$ jest podpierścieniem pierścienia $A$.
+\end{wl}
+\begin{proof}
+Niech $a,b \in A^{D}$. Wtedy 
+$D(a-b)=D(a)-D(b)=\textbf{0}-\textbf{0}=\textbf{0}$. Zatem $a-b \in A^{D}$. Ponadto 
+$D(a*b)=D(a)*b+a*D(b)=D(a)*\textbf{0}+\textbf{0}*D(b)=\textbf{0}+\textbf{0}=\textbf{0}$. Zatem $a*b \in A^{D}$.
+\end{proof}
+%W9
+\begin{wl}
+Niech $B$ będzie podpierścieniem pierścienia $A$, $D \in Der_{B}A$, dla dowolnych $a \in A$, $b \in B$ mamy $D(b*a)=b*D(a)$. Ponadto, jeśli $B$ jest ciałem, wówczas odwzorowanie D jest $B$-liniowe.
+\end{wl}
+\begin{proof}
+Niech $a \in A$, $b \in B$ będą dowolne. Wtedy z reguły Leibniza $D(b*a)=b*D(a)+D(b)*a$. Odwzorowanie $D$ jest $B$-różniczkowaniem, więc $D(b)=\textbf{0}$, a zatem $D(b)*a=\textbf{0}$. W związku z tym  $D(b*a)=b*D(a)+\textbf{0}=b*D(a)$. Niech $a_{1},a_{2} \in A$, $b_{1},b_{2} \in B$. Z addytywności $D(b_{1}*a_{1}+b_{2}*a_{2})=D(b_{1}*a_{1})+D(b_{2}*a_{2})$. Z poprzedniej własności $D(b_{1}*a_{1})=b_{1}*D(a_{1})$, $D(b_{2}*a_{2})=b_{2}*D(a_{2})$, stąd  $D(b_{1}*a_{1}+b_{2}*a_{2})=b_{1}*D(a_{1})+b_{2}*D(a_{2})$.
+\end{proof}
+%W10
+\begin{wl}
+Dla dowolnego $k \in \mathbb{N}$ mamy $D(a^{k})=k \cdot a^{k-1}D(a)$.
+\end{wl}
+\begin{proof}
+Dla $k=1$ mamy: $D(a)=1 \cdot a^{0}*D(a)=D(a)$. Zakładamy, że teza jest spełniona dla pewnego $n \in \mathbb{N}$. Wtedy dla $k=n+1$ mamy: $D(a^{n+1})=D(a^{n}*a)=D(a^{n})*a + a^{n}*D(a)=n \cdot a^{n-1} *D(a)*a + a^{n}*D(a)= n \cdot a^{n} * D(a)+a^{n} \cdot D(a)= (n+1) \cdot a^{(n+1)-1} \cdot D(a)$.
+\end{proof}
+%W11
+\begin{wl}
+Niech $A$ będzie pierścieniem przemiennym z jedynką, a $P \in A^{D}[T]$ wielomianem zmiennej T. Wtedy dla dowolnego $a \in A$ mamy $D(P(a))=D(a)*P'(a)$.
+\end{wl}
+\begin{proof}
+Niech $\displaystyle P(T)= \sum_{k=0}^{d} b_{k} * T^{k}$. Wtedy $\displaystyle P(a)= \sum_{k=0}^{d} b_{k} * a^{k}$, i dalej na mocy Własności 2.9, 2.10 oraz faktu, że $D$ jest $A^D$-różniczkowaniem mamy:
+\begin{align*}
+  D(P(a))= D(\sum_{k=0}^{d} b_{k} * a^{k} )=D(b_{0})+\sum_{k=1}^{d}  \cdot D(b_{k} * a^{k})\\
+  =\textbf{0}+\sum_{k=1}^{d} D(b_{k} * a^{k}) = \sum_{k=1}^{d} b_{k} *a^{k-1}D(a)\\
+  =D(a)*\sum_{k=0}^{d} b_{k} *a^{k-1}=D(a)*P'(a).
+\end{align*}
+
+\end{proof}
+
+Poniżej przedstawię przykłady różniczkowań.
+%Przykład 1
+\begin{exs}
+Niech $A$ będzie pierścieniem przemiennym z jedynką, $D \equiv \textbf{0}$ jest różniczkowaniem.
+\end{exs}
+
+Istotnie dla dowolnych $a,b \in A$ mamy
+\\ $D(a+b)=\textbf{0}=\textbf{0}+\textbf{0}=D(a)+D(b)$
+\\$D(a*b)=\textbf{0}=\textbf{0}+\textbf{0}=a+\textbf{0}+\textbf{0}*b=a*D(b)+D(a)*b$.
+
+%Przykład 2
+\begin{exs}
+Niech $A=R[T]$ będzie pierścieniem wielomianów zmiennej $T$ o współczynnikach z pierścienia $R$ i rozważmy odwzorowanie $D: A \mapsto A$ dane formułą: 
+$\displaystyle D(\sum_{k=0}^{d}a_{k} \cdot T^{k})=\sum_{k=1}^{d}k \cdot a_{k} \cdot T^{k-1}$. W ten sposób zadane $D$ jest różniczkowaniem.
+\end{exs}
+
+Istotnie, niech 
+$\displaystyle f=\sum_{k=0}^{d_{1}}a_{k} \cdot T^{k}$, $\displaystyle g=\sum_{k=0}^{d_{2}}b_{k} \cdot T^{k}$ będą dowolnymi wielomianami z $R[T]$. Kładąc $d=max\{d_{1},d_{2}\}$ oraz $a_{k}=0$ dla $k>d_{1}$ i $b_{k}=0$ dla $k>d_{2}$ dostajemy
+$\displaystyle f=\sum_{k=0}^{d}a_{k} \cdot T^{k}$
+oraz
+$\displaystyle g=\sum_{k=0}^{d}b_{k} \cdot T^{k}$.
+Korzystając z powyższego mamy:
+\\$\displaystyle D(f)+D(g)=D(\sum_{k=0}^{d}a_{k} \cdot T^{k})+D(\sum_{l=0}^{d}b_{k} \cdot T^{k})
+=\sum_{k=1}^{d}k \cdot a_{k} \cdot T^{k-1}+\sum_{k=1}^{d}k \cdot b_{k} \cdot T^{k-1}$\\$
+\displaystyle=D(\sum_{k=0}^{d}(a_{k}+b_{k})\cdot T^{k}) 
+=D(f+g)$\\
+oraz:\\
+$\displaystyle D(f \cdot g) =D ((\sum_{k=0}^{d_{1}}a_{k} \cdot T^{k}) \cdot (\sum_{k=0}^{d_{2}}b_{k} \cdot T^{k}))=D(\sum_{n=0}^{d_{1}+d_{2}}(\sum_{k+l=n} a_{k} \cdot b_{l} ) \cdot T^{n})$\\$
+\displaystyle=\sum_{n=0}^{d_{1}+d_{2}} n \cdot (\sum_{k+l=n}a_{k} \cdot b_{l}) \cdot T^{n-1})
+=\sum_{n=0}^{d_{1}+d_{2}} (\sum_{k+l=n}
+(k+l)a_{k} \cdot b_{l}) \cdot T^{n-1})$\\$
+\displaystyle=\sum_{n=0}^{d_{1}+d_{2}} \sum_{k+l=n}
+[k \cdot a_{k} \cdot T^{k-1} \cdot b_{l} \cdot T^{l}]+ \sum_{n=0}^{d_{1}+d_{2}} \sum_{k+l=n}
+(a_{k} \cdot T^{k} b_{l} \cdot T^{l-1})$\\$
+\displaystyle= (\sum_{k=0}^{d_{1}} k \cdot a_{k}T^{k-1} ) \cdot (\sum_{l=0}^{d_{2}}b_{l}T^{l})+(\sum_{k=0}^{d_{1}} \cdot a_{k} T^{k} ) \cdot (\sum_{l=0}^{d_{2}} l \cdot b_{l}T^{l-1})=D(f) \cdot g +f \cdot D(g)$.
+
+
+\subsection{Różniczkowania lokalnie nilpotentne}
+
+\begin{lem}
+Niech $A$ będzie pierścieniem przemiennym z jedynką, a $D$ będzie różniczkowaniem pierścienia $A$. wówczas 
+\begin{flushleft}
+$\displaystyle D^n(a*b)=\sum_{m=0}^n \binom{n}{m}\cdot D^m(a)*D^{n-m}(b)$,\\
+gdzie $D^0$ oznacza, oczywiście, odwzorowanie identycznościowe.
+\end{flushleft}
+\end{lem}
+\begin{proof}
+Dla $n=1$ zachodzi
+$D^1(a*b)=D(a*b)=D(a)*b+a*D(b)$\\$
+\displaystyle=\binom{1}{0}\cdot D^1(a)*D^0(b)+\binom{1}{1}\cdot D^1(a)*D^0(b)
+=\sum_{m=0}^1 \binom{1}{m}\cdot D^m(a)*D^{1-m}(b)$. 
+\\Zakładamy równość dla $n=k$, $k\in \mathbb{N}$. Weźmy $n=k+1$. Wówczas otrzymujemy ($D^k$ jako złożenie odwzorowań addytywnych jest addytywne):
+\begin{flushleft}
+$D^{k+1}(a*b)=D^k(D(a*b))=D^k(D(a)*b+a*D(b))$\\$
+\displaystyle=D^k(D(a)*b)+D^k(a*D(b))$\\$
+\displaystyle=\sum_{m=0}^k \binom{k}{m}\cdot D^m(D(a))*D^{k-m}(b)+
+\sum_{m=0}^k \binom{k}{m}\cdot D^m(a)*D^{k-m}(D(b))$\\$
+\displaystyle=\sum_{m=0}^k \binom{k}{m}\cdot D^{m+1}(a)*D^{k-m}(b)+
+\sum_{m=0}^k \binom{k}{m}\cdot D^m(a)*D^{k+1-m}(b)$\\$
+\displaystyle =a*D^{k+1}(b)+b*D^{k+1}(a)+\sum_{m=1}^{k} \binom{k}{m}\cdot D^m(a)*D^{k+1-m}(b)+
+\sum_{m=0}^{k-1}\binom{k}{m}\cdot D^{m+1}(a)*D^{k-m}(b)$\\$
+\displaystyle =a*D^{k+1}(b)+b*D^{k+1}(a)+\sum_{m=1}^{k} \binom{k}{m}\cdot D^m(a)*D^{k+1-m}(b)+ 
+\sum_{m=1}^{k}\binom{k}{m-1}\cdot D^m(a)*D^{k+1-m}(b)$\\$
+\displaystyle =a*D^{k+1}(b)+b*D^{k+1}(a)+\sum_{m=1}^{k}( \binom{k}{m}\cdot D^m(a)*D^{k+1-m}(b)+
+\binom{k}{m-1}\cdot D^m(a)*D^{k+1-m}(b))$\\$
+=a*D^{k+1}(b)+b*D^{k+1}(a)+\sum_{m=1}^{k} \binom{k+1}{m}\cdot D^m(a)*D^{k+1-m}(b)$\\$
+\displaystyle =\sum_{m=0}^{k+1} \binom{k+1}{m}\cdot D^m(a)*D^{k+1-m}(b)$.
+\end{flushleft}
+\end{proof}
+
+\begin{lem}
+Niech $A$ będzie pierścieniem przemiennym z jedynką, $D$ będzie różniczkowaniem lokalnie nilpotentnym pierścienia $A$. Niech $a,b \in A$ oraz niech $n_1,n_2$ będą liczbami naturalnymi takimi, że $D^{n_1}(a)=\textbf{0}$ oraz $D^{n_2}(b)=\textbf{0}$. Wówczas $D^{n_1+n_2}(a*b)=\textbf{0}$.
+\end{lem}
+\begin{proof}
+Zgodnie z Lematem 2.3, $\displaystyle D^{n_1+n_2}(a*b)= \sum_{k=0}^{n_1+n_2} \binom{n_1+n_2}{k}\cdot D^k(a)*D^{n_1+n_2-k}(b)$.
+Zauważmy, że dla $k\geq n_1$ zachodzi $D^k(a)=\textbf{0}$, więc cały składnik $\binom{n_1+n_2}{k}\cdot D^k(a)*D^{n_1+n_2-k}(b)$ wynosi $\textbf{0}$. Jeśli $k < n_1$, to $n_1+n_2-k>n_2$, zatem $D^{n_1+n_2-k}(b)=\textbf{0}$, więc cały składnik $\binom{n_1+n_2}{k}\cdot D^k(a)*D^{n_1+n_2-k}(b)$ wynosi $\textbf{0}$. Mamy zatem $\displaystyle D^{n_1+n_2}(a*b)= \sum_{k=0}^{n_1+n_2} \binom{n_1+n_2}{k}\cdot D^k(a)*D^{n_1+n_2-k}(b)= \sum_{k=0}^{n_1+n_2}\textbf{0}=\textbf{0}$.
+\end{proof}
+
+\begin{twr}
+Niech $A$ będzie pierścieniem przemiennym z jedynką, $S$ będzie zbiorem generującym pierścień $A$. Wówczas różniczkowanie $D$ pierścienia $A$ jest lokalnie nilpotentne wtedy i tylko wtedy, gdy dla dowolnego elementu $a$ zbioru $S$ istnieje liczba naturalna $n$ taka, że $D^n(a)=\textbf{0}$.
+\end{twr}
+\begin{proof}
+$\Rightarrow$ Różniczkowanie $D$ jest lokalnie nilpotentne, więc dla dowolnego elementu $a$ zbioru $A$ istnieje liczba naturalna $n$ taka, że $D^n(a)=\textbf{0}$. Ponieważ $S \subset A$, w szczególności dla elementów zbioru $S$ zachodzi powyższa równość.
+$\Leftarrow$ Zdefiniujmy zbiór $NilD$ zadany następująco: $NilD=\{a\in A: \exists n\in \mathbb{N}$ $D^n(a)=\textbf{0}\}$. Udowodnimy, że $NilD=A$. Oczywiście $NilD \subset A$. Dowód zawierania w drugą stronę rozpoczniemy od wykazania, że $NilD$ jest podpierścieniem pierścienia $A$. Weźmy dowolne $a,b$ zbioru $NilD$. Wówczas istnieją liczby naturalne $n_1$ i $n_2$ takie, że $D^{n_1}(a)=\textbf{0}$ oraz $D^{n_2}(b)=0$. Weźmy $n:=max\{n_1,n_2\}$. Wówczas $D^n(a-b)=D^n(a)-D^n(b)=\textbf{0}-\textbf{0}=\textbf{0}$. Następnie skorzystamy z Lematu 2.4. Zdefiniujmy $m:=n_1+n_2$. Wówczas $D^m(a*b)=D^{n_1+n_2}(a*b)=\textbf{0}$.
+Zauważmy, że zbiór $S$ zawiera się w zbiorze $NilD$. Zgodnie z definicją zbioru generującego, $A$ jest najmniejszym w sensie inkluzji pierścieniem zawierającym zbiór $S$, zatem wynika stąd, że $A \subset NilD$.
+\end{proof}
+
+%\begin{definition}
+%Niech $A$ będzie pierścieniem przemiennym z jedynką. Dla $D\in DerA$ element $s\in A$ nazywamy slicem, gdy $D(s)=\textbf{1}$.
+%\end{definition}
+
+%\begin{exs}
+%Dla $A=\mathbb{R}[X]$ dane jest odwzorowanie postaci: $D=X\cdot\frac{\partial}{\partial X}$. Okazuje się, że odwzorowanie $D$ %jest różniczkowaniem (zgodnie z Twierdzeniem 3.1). 
+%\\Niech $w$ będzie dowolnym wielomianem z $\mathbb{R}[X]$. Rozważmy wartość wielomianu $D(w)$ w zależności od stopnia wielomianu $w$. Jeśli stopień $w$ wynosi $0$, wówczas $D(w)=X\cdot\frac{\partial w}{\partial X}=X\cdot 0=0$. Jeśli stopień wielomianu $w$ wynosi co najmniej $1$, wówczas $w$ jest postaci $\displaystyle w=\sum_{k=0}^d a_k\cdot X^k$, gdzie $d$ jest liczbą naturalną oraz $d\geq 1$, $a_1,...,a_d\in \mathbb{R}$ oraz $a_d\neq 0$. Wtedy $\displaystyle D(w)=D(\sum_{k=0}^d a_k\cdot X^k)=X\cdot\sum_{k=0}^d a_k\cdot k\cdot X^{k-1}=\sum_{k=0}^d a_k\cdot k\cdot X^k$, zatem stopień wielomianu $D(w)$ wynosi co najmniej $1$. Stąd nie istnieje wielomian $w \in\mathbb{R}[X]$ taki, że $D(w)=1$, zatem różniczkowanie $D$ określone na pierścieniu $\mathbb{R}[X]$ nie posiada slice'u.  
+%\end{exs}
+
+%\begin{exs}
+%Niech $\mathbb{R}[X_1,...,X_n]$ będzie pierścieniem wielomianów zmiennych $X_1,...,X_n$ o współczynnikach w $\mathbb{R}$, gdzie %$n$ jest dowolną liczbą naturalną. Dane jest różniczkowanie postaci: $D=\frac{\partial}{\partial X_i}$, $i\in \{ 1,...,n\}$ %(Jest to różniczkowanie, zgodnie z Twierdzeniem 3.1). Tak zadane różniczkowanie posiada slice postaci: $s=X_i+r$, gdzie $r$ jest dowolną liczbą rzeczywistą. 
+%\end{exs}
+
+%\begin{exs}
+%Niech $\mathbb{R}[X,Y]$ będzie pierścieniem wielomianów zmiennych $X,Y$ o współczynnikach w $\mathbb{R}$.Dane jest %różniczkowanie postaci: $D=Y\cdot\frac{\partial}{\partial X}$. Tak zadane różniczkowanie jest lokalnie nilpotentne (zgodnie z %Twierdzeniem 3.3), ale nie posiada slice'u.
+%\\Niech $w$ będzie dowolnym wielomianem z $\mathbb{R}[X]$. Jeśli stopień wielomianu $w$ ze względu na zmienną $X$ wynosi $0$, wówczas $D(w)=Y\cdot\frac{\partial w}{\partial X}=Y\cdot 0=0$. Jeśli stopień wielomianu $w$ ze względu na zmienną $X$ wynosi co najmniej $1$, wówczas $D(w)\neq 0$ oraz jest stopnia co najmniej $1$ ze względu na zmienną $Y$, zatem $D(w)\neq 1$ dla dowolnego wielomianu $w\in \mathbb{R}[X,Y]$, więc różniczkowanie $D$ nie posiada slice'u.
+%\end{exs}
+
+%\begin{definition}
+%Niech $A$ będzie pierścieniem przemiennym z jedynką. Dla $D\in DerA$ element $p\in A$ nazywamy pre-slicem, gdy $D(p)\neq %\textbf{0}$ oraz $D^2(p)=\textbf{0}$.
+%\end{definition}
+
+%\begin{twr}
+%Niech $A$ będzie pierścieniem przemiennym z jedynką. Wówczas każde niezerowe różniczkowanie lokalnie nipotentne określone na pierścieniu $A$ posiada pre-slice.
+%\end{twr}
+%\begin{proof}
+%Wiemy, że różniczkowanie $D$ jest niezerowe, czyli istnieje element $p\in A$ taki, że $D(p)\neq 0$. Różniczkowanie $D$ jest lokalnie nilpotentne, zatem istnieje liczba naturalna $n$ taka, że $D^n(p)=\textbf{0}$. Niech $n$ będzie najmniejszą liczbą spełniającą tę równość.
+%\\Jeśli $n=2$, to $p$ jest szukanym pre-slicem.
+%\\Jeśli $n>2$, to $D^n(p)=D^2(D^{n-2}(p))=\textbf{0}$. Ponieważ $n$ jest najmniejszą liczbą taką, że $D^n(p)=\textbf{0}$, to $D^{n-2}(p)\neq \textbf{0}$, zatem $D^{n-2}(p)$ jest szukanym pre-slicem.
+%\end{proof}
+
+%\begin{lem}
+%Niech $A$ będzie pierścieniem przemiennym z jedynką, zaś $D$ będzie różniczkowaniem tego pierścienia ze silcem $s$. Wtedy dla dowolnej liczby naturalnej $n$ zachodzi: $D^n(s^n)=n!\cdot \textbf{1}$.
+%\end{lem}
+%\begin{proof}
+%Dla $n=0$ mamy:
+%\\$D^0(s^0)=D^0(\textbf{1})=\textbf{1}=0!*\textbf{1}$.
+%\\Zakładamy, że teza zachodzi dla $n=k$, gdzie $k\in \mathbb{N}$. 
+%\\Dla $n=k+1$ mamy (zgodnie z Lematem 2.3):
+%\\$\displaystyle D^{k+1}(s^{k+1})=D^{k+1}(s*s^k)=\sum_{i=0}^{k+1}\binom{k+1}{i} D^i(s)*D^{k+1-i}(s^k)=\binom{k+1}{0} D^0(s)*D^{k+1-0}(s^k)+\binom{k+1}{1} D^1(s)*D^(k+1-1)(s^k)=s*D^{k+1}(s^k)+(k+1)\cdot D(s)*D^k(s^k)=s*D(D^{k}(s^k))+(k+1)\cdot k!\cdot \textbf{1}=s*D(k!)+(k+1)!\cdot \textbf{1}=\textbf{0}+(k+1)!\cdot\textbf{1}=(k+1)!\cdot\textbf{1}$.
+%\end{proof}
+
+%\begin{twr}
+%Niech $A$ będzie $\mathbb{Q}$-algebrą, zaś $D: A\mapsto A$ będzie różniczkowaniem lokalnie nilpotentnym ze slicem $s$. Wtedy:
+%\begin{flushleft}
+%1) $A=A^D[s]$, gdzie $A^D[s]$ jest zbiorem wielomianów o współczynnikach z $A^D$ z podstawieniem $s$,\\
+%2) $s$ jest algebraicznie niezależny nad $A^D$, to znaczy: nie istnieje liczba naturalna $n$ oraz elementy zbioru $A^D$: $a_0,...,a_d$, $a_n\neq 0$ takie, że $a_ns^n+...+a_0=\textbf{0}$,\\
+%3) $D=\frac{d}{ds}$.
+%\end{flushleft}
+%\end{twr}
+%\begin{proof}
+%1) Oczywiście $A^D[s]\subset A$, ponieważ $A^D\subset A$, $s\in A$ zaś działania w pierścieniu $A$ zachowują wewnętrzność.\\
+%Udowodnimy, że $A\subset A^D[s]$.
+%\\Weźmy dowolny element $a\in A$.
+%Chcemy wykazać, że dla dowolnej liczby naturalnej $n$ zachodzi: jeśli $D^n(a)=\textbf{0}$, to $a\in A^D[s]$.
+%\\Dla $n=1$ zachodzi:
+%\\jeśli $D(a)=\textbf{0}$, to $a\in A^D$, stąd $a\in A^d[s]$.
+%\\Załóżmy, że implikacja jest prawdziwa dla dowolnego $n=k$, gdzie $k\in \mathbb{N}$, to znaczy: jeśli $D^k(a)=\textbf{0}$, to $a\in A^D[s]$.
+%\\Dla $n=k+1$ mamy:
+%\\$D^{k+1}(a)=\textbf{0}\rightarrow D(D^k(a))=\textbf{0}\Rightarrow D^k(a)\in A^D\Rightarrow %D^k(D^k(a)*s^k)=D^k(a)*D(s^k)=D^k(a)*k!$, stąd $D^k(D^k(a)*s^k)-D^k(a)*k!=\textbf{0}$, czyli $D^k(D^k(a)*s^k)-D^k(a*k!)=\textbf{0}$. Stosując $n$-krotnie łączność różniczkowania, otrzymujemy:  $D^k (D^k(a)*s^k-a*k!)=\textbf{0}$, zatem korzystając z założenia indukcyjnego $D^k(a)*s^k-a*k! \in A^D[s]$. Niech $a_0:=D^k(a)*s^k)-a*k!$. Mnożąc to równanie obustronnie przez $\frac{1}{k!}$ i zamieniając stronami, otrzymujemy: $a=D^k(a)*s^k-\frac{a_0}{k!}$. Mamy $D^k(a)\in A^D$ oraz $a_0\in A^D[s]$, zatem $a\in A^D[s]$.\\
+%2) Załóżmy, że istnieje liczba naturalna $n$ oraz elementy zbioru $A^D$: $a_0,...,a_d$ takie, że $a_ns^n+...+a_0=\textbf{0}$. Wtedy $D^n(a_ns^n+...+a_0)=a_nD^n(s^n)+...+a_0D^n(1)=n!\cdot a_n$  Zauważmy, że $A$ jest $Q$-algebrą, zaś $Q$ ma charakterystykę równą 0. Wtedy $A$ również ma charakterystykę równą 0 (zgodnie z Uwagą 1.14), zatem $n!\cdot a_n\neq \textbf{0}$.\\
+%3) 
+%\end{proof}
+
+
+\section{Różniczkowania lokalnie nilpotentne pierścieni wielomianów}
+
+\begin{twr}
+Niech $D$ będzie dowolnym $R$-różniczkowaniem pierścienia wielomianów $R[X_{1},...,X_{n}]$ zmiennych $X_1,...,X_n$. Wówczas $D$ ma postać:
+$$D=F_1 \frac{\partial}{\partial X_1}+...+F_n \frac{\partial}{\partial X_n}$$
+gdzie $F_1,...,F_n$ są wielomianami pierścienia $R[X_{1},...,X_{n}]$.
+\end{twr}
+
+\begin{proof}
+Niech $D$ będzie dowolnym $R$-różniczkowaniem pierścienia $R[X_{1},...,X_{n}]$. 
+Niech $D(X_1)=F_1,...,D(X_n)=F_n$.
+Zdefiniujmy zbiór $P=\{ w\in R[X_1,...,X_n]:$ $D(w)=F_1 \frac{\partial w}{\partial X_1}+...+F_n \frac{\partial w}{\partial X_n}\}$.
+Udowodnimy, że powyższy zbiór jest podpierścieniem pierścienia $R[X_1,...,X_n]$. Niech $a,b$ będą dowolnymi elementami zbioru $P$. Wówczas mamy
+\\$D(a-b)=D(a)-D(b)=F_1 \frac{\partial a}{\partial X_1}+...+F_n \frac{\partial a}{\partial X_n}-F_1 \frac{\partial b}{\partial X_1}-...-F_n \frac{\partial b}{\partial X_n}=F_1 (\frac{\partial a}{\partial X_1}-\frac{\partial b}{\partial X_1})+...+F_n (\frac{\partial a}{\partial X_n}-\frac{\partial b}{\partial X_n})$\\$
+=F_1 \frac{\partial (a-b)}{\partial X_1}+...+F_n \frac{\partial (a-b)}{\partial X_n}$.
+\\$D(a*b)=D(a)*b+a*D(b)=(F_1 \frac{\partial a}{\partial X_1}+...+F_n \frac{\partial a}{\partial X_n})*b+a*(F_1 \frac{\partial b}{\partial X_1}+...+F_n \frac{\partial b}{\partial X_n})=F_1(\frac{\partial a}{\partial X_1}*b+a*\frac{\partial b}{\partial X_1})+...+F_n(\frac{\partial a}{\partial X_n}*b+a*\frac{\partial b}{\partial X_n})=F_1 \frac{\partial (a*b)}{\partial X_1}+...+F_n \frac{\partial (a*b)}{\partial X_n}$
+\\Zauważmy, że zbiór $R\cup \{ X_1,...,X_n\}$ jest zbiorem generującym dla pierścienia $R[X_1,...,X_n]$ oraz
+\\$D(X_1)=F_1=F_1 \frac{\partial X_1}{\partial X_1}+ F_2 \frac{\partial X_1}{\partial X_2}+...+F_n \frac{\partial X_1}{\partial X_n}$,...,$D(X_n)=F_n=F_1 \frac{\partial X_n}{\partial X_1}+ F_{n-1} \frac{\partial X_n}{\partial X_{n-1}}+...+F_n \frac{\partial X_n}{\partial X_n}$, stąd $X_1,...,X_n \in P$. Zauważmy również, że zgodnie z definicją $R$-różniczkowania dla dowolnego elementu $r$ pierścienia $R$ mamy
+\\$D(r)=0=F_1 \frac{\partial r}{\partial X_1}+ F_2 \frac{\partial r}{\partial X_2}+...+F_n \frac{\partial r}{\partial X_n}$, stąd $r\in P$.
+\\Mamy zatem $R\cup \{ X_1,...,X_n\} \subset P$, zatem korzystając z faktu, że $P$ jest pierścieniem oraz  $R\cup \{ X_1,...,X_n\}$ generuje $R[X_1,...,X_n]$ otrzymujemy\\
+$R[X_1,...,X_n]\subset P$. Oczywiście $P\subset R[X_1,...,X_n]$, zatem $P=R[X_1,...,X_n]$.
+\end{proof}
+
+Teraz wprowadźmy pojęcie różniczkowania trójkątnego oraz związane z nim twierdzenie.
+
+\begin{definition}
+Niech $R[X_1,...,X_n]$ będzie pierścieniem wielomianów zmiennych $X_1,...,X_n$ o współczynnikach z $R$. $R$-różniczkowanie $D$ nazywamy różniczkowaniem trójkątnym, jeśli ma postać:
+\begin{flushleft}
+$D=F_1(X_2,...,X_n)*\frac{\partial}{\partial X_1}+F_2(X_3,...,X_n)*\frac{\partial}{\partial X_2}+...+F_n*\frac{\partial}{\partial X_n}$, gdzie $F_1,...,F_n \in R[X_1,...,X_n]$.
+\end{flushleft}
+\end{definition}
+
+\begin{twr}
+Dowolne różniczkowanie trójkątne jest lokalnie nilpotentne.
+\end{twr}
+\begin{proof}
+Zdefiniujmy zbiór $NilD$ zadany następująco: $NilD=\{a\in R[X_1,...,X_n]: \exists n\in \mathbb{N}$ $D^n(a)=\textbf{0}\}$. W Twierdzeniu 2.5. wykazaliśmy, że tak zadany zbiór jest podpierścieniem pierścienia, na którym określone jest różniczkowanie $D$, w tym przypadku $R[X_1,...,X_n]$. 
+Udowodnimy, że dla dowolnego $k\in \{ 1,...,n\}$ zachodzi $X_{n+1-k})\in NilD$. 
+Dla $k=1$ mamy:
+\\$D^{1+1}(X_{n+1-1})=D^2(X_n)=D(F_1(X_2,...,X_n)*\frac{\partial X_n}{\partial X_1}+F_2(X_3,...,X_n)+...+\frac{\partial X_n}{\partial X_{n-1}}+F_n*\frac{\partial X_n}{\partial X_n})=D(F_n)=D(F_1(X_2,...,X_n)*\frac{\partial F_n}{\partial X_1}+F_2(X_3,...,X_n)+...+F_n*\frac{\partial F_n}{\partial X_n})=\textbf{0}$, gdyż $F_n \in \mathbb{R}$.
+Teraz załóżmy, że powyższa własność jest spełniona dla dowolnego $k=m\in \{1,...,n\}$. 
+Oznacza to, że $X_n,X_{n-1},...,X_{n+1-m}\in NilD$. Zbiór $\{X_n,X_{n-1},...,X_{n+1-m}\}\cup R$ generuje pierścień wielomianów $m$ zmiennych $R[X_{n+1-m},...,X_n]$. Stąd oraz z faktu, że $NilD$ jest pierścieniem zachodzi $R[X_{n+1-m},...,X_n]\subset Nil(D)$.
+Możemy więc wywnioskować, że dla wielomianu $F_{n-m}(X_{n-m+1},...,X_n)$ istnieje liczba naturalna $n_0$ taka, że $D^{n_0}(F_{n-m}(X_{n-m+1},...,X_n))=\textbf{0}$. 
+Dla $k=m+1$ mamy:
+\\$D^{n_0+1}(X_{n+1-(m+1)})=D^{n_0+1}(X_{n-m})=D^{n_0}(F_1(X_2,...,X_n)*\frac{\partial X_{n-m}}{\partial X_1}+F_2(X_3,...,X_n)*\frac{\partial X_{n-m}}{\partial X_2}+...+F_n*\frac{\partial X_{n-m}}{\partial X_n})=D^{n_0}(F_{n-m}(X_{n-m+1},...,X_n))
+=\textbf{0}$.
+\\Dla dowolnego elementu $r\in R$ mamy $D(r)=0$, ponieważ $D$ jest $R$-różniczkowaniem, zatem $R\subset NilD$.
+Z faktu, że $\{X_1,...,X_n\}\cup R \subset NilD$ oraz że $NilD$ jest pierścieniem wynika, że pierścień generowany przez ${X_1,...,X_n}\cup R$ zawiera się w $NilD$, a zatem $R[X_1,...,X_n]\subset NilD$.
+\end{proof}
+
+\begin{twr}
+Niech $R$ będzie $\mathbb{Q}$-algebrą, $D$ będzie $R$-różniczkowaniem lokalnie nilpotentnym na pierścieniu wielomianów zmiennych $X,Y$ $R[X,Y]$. Wtedy istnieje wielomian $f\in R[X,Y]$ taki, że zachodzi: 
+\begin{flushleft}
+$D=\frac{\partial f}{\partial Y}* \frac{\partial}{\partial X}-\frac{\partial f}{\partial X}* \frac{\partial}{\partial Y}$.
+\end{flushleft}
+\end{twr}
+Dowód powyższego twierdzenia można znaleźć np. w \cite{pvr}.
+
+\begin{twr}
+Niech $R$ będzie $\mathbb{Q}$-algebrą, $D$ będzie $R$-różniczkowaniem lokalnie nilpotentnym na pierścieniu wielomianów $R[X]$ zmiennej $X$. Wtedy istnieje wielomian $f\in R$ taki, że zachodzi: 
+$$D=f*\frac{\partial}{\partial X}$$.
+\end{twr}
+\begin{proof}
+Z Własności 1.10, dla dowolnej liczby naturalnej $n$ zachodzi
+$D(X^n)=n\cdot D(X)*X^{n-1}$.
+%\\Dla $n=1$ mamy:
+%\\$D(X)=1\cdot D(X)*X^0$.
+%\\Zakładamy, że równość jest prawdziwa dla pewnego $n=k$, gdzie $k \in \mathbb{N}$. Wtedy dla $n=k+1$ Zachodzi:
+%\\$D(X^{k+1})=D(X^k*k)=D(X^k)*X+X^k*D(X)= D(X)*k\cdot X^{k-1}*X+X^k*D(X)=D(X)*(k\cdot X^k+X^k)=D(X)*(k+1)\cdot X^{k}$.
+\\Wykażmy, że $D(X)\in R$. Załóżmy nie wprost, że $D(X)$ jest wielomianem stopnia co najmniej $1$, wówczas dla dowolnego $n>0$ dla dowolnego wielomianu postaci $\displaystyle \sum_{k=1}^n a_k*X^k$, gdzie $a_0,...,a_n\in R$ zachodzi
+$\displaystyle D(\sum_{k=0}^n a_k*X^k)= \sum_{k=0}^n a_k*D(X^k)=\sum_{k=0}^n a_k* D(X^{k-1}*X)=\sum_{k=0}^n a_k* k\cdot X^{k-1}*D(X)$ jest wielomianem stopnia co najmniej $1$. Stąd dla dowolnej liczby naturalnej $N$ oraz dla dowolnego wielomianu $w\in R[X]\setminus R$ mamy $D^N(w)=D(D^{N-1}(w))$ jest stopnia co najmniej $1$, co jest sprzeczne z faktem, że różniczkowanie $D$ jest lokalnie nilpotentne. 
+\\Załóżmy obecnie, że $f=D(X)\in \mathbb{R}$ oraz weźmy dowolny wielomian z pierścienia $R[X]$. Niech $a_0,...,a_n\in R$. Wówczas:
+\\$\displaystyle D(\sum_{k=0}^n a_k*X^k)= \sum_{k=0}^n a_k*D(X^k)=\sum_{k=0}^n a_k* D(X^{k-1}*X)=\sum_{k=0}^n a_k* k\cdot X^{k-1}*D(X)
+=D(X)*\sum_{k=0}^n a_k* k\cdot X^{k-1}=D(X)*\frac{\partial \sum_{k=0}^n a_k*X^k}{\partial X}$, gdzie $D(X)\in R$, zatem dla dowolnego wielomianu $w\in R[X]\setminus \{ \textbf{0} \}$ mamy $deg(w)<deg(D(w))$. Wynika z tego, że dla dowolnego $w\in R[X]\setminus \{ \textbf{0}\}$ zachodzi\\
+$D^{deg(w)+1}(w)=0$.
+\end{proof}
+
+\newpage
+\section*{Podsumowanie}
+\addcontentsline{toc}{section}{Podsumowanie}
+\paragraph{}
+
+\indent W pierwszym rozdziale omówiłam podstawowe pojęcia z algebry niezbędne do wprowadzenia tematu mojej pracy.\\
+\indent W rozdziale drugim zajęłam się omówieniem różniczkowania na dowolnym pierścieniu z jedynką. Zdefiniowałam $B$-różniczkowanie oraz różniczkowanie lokalnie nilpotentne. Przedstawiłam tu ogólne własności różniczkowań, twierdzenie mające zastosowanie w rozdziale 3 oraz przykłady dające intuicyjny pogląd na opisywane przeze mnie zagadnienie.\\
+\indent Ostatni rozdział dotyczy różniczkowań lokalnie 
+nilpotentnych określonych na pierścieniach wielomianów. W tym rozdziale zaprezentowałam przykłady 
+takich różniczkowań, a także zaznaczyłam, że różniczkowania lokalnie nilpotentne pierścieni wielomianów jednej i dwóch 
+zmiennych przybierają zawsze taką samą, ogólną postać. 
+\\Wszystkie zamieszczone przeze mnie dowody wykazałam samodzielnie. 
+\paragraph{}
+
+	\newpage
+	\begin{thebibliography}{3}
+		\bibitem{pvr} P. van Rossum, \textit{Tackling Problems on Affine Space with Locally Nilpotent Derivations on Polynomial Rings},departament of mathematics, Radboud University, Nijmegen, Netherlands, 2001.
+		\bibitem{fr} G. Freudenburg, \textit{Algebraic Theory of Locally Nilpotent Derivations}, Encyclopaedia of mathematical sciences v. 136, Springer-Verlag, Berlin, 2006.
+%		\bibitem{chartrand} G. Chartrand, P. Zhang, \textit{A first course in graph theory}, Dover Publication, New York, 2012.
+%		\bibitem{clark} W. Edwin Clark, Stephen Suen, \textit{Inequality Related to Vizing’s Conjecture}, The Electronic Journal %of Combinatorics, Volume 7 (2000), Note \#N4.
+%		\bibitem{haynes} T. Haynes, S. Hedetniemi, P. Slater, \textit{Fundamentals of domination in graphs},  Marcel Dekker %Inc., New York, Basel, 1998.
+%		\bibitem{ore} O. Ore, \textit{Theory of Graphs}, Amer. Math. Soc. Colloq. Publ., 38 (Amer. Math. Soc., Providence, RI), %1962.
+%		\bibitem{reed} B. Reed, \textit{Paths, stars, and the number three}, Combin. Probab. Comput. 5, 1996, s. 277-295.
+%		\bibitem{viz} V.G. Vizing, \textit{The Cartesian product of graphs}, Vy\v cisl, Sistemy 9 (1963), s. 30–43.
+%
+%		\bibitem{walikar} H. B. Walikar, B. D. Acharya, and E. Sampathkumar, \textit{Recent developments in the theory of %domination in graphs.} In MRI Lecture Notes in Math., Mahta Research Instit., Allahabad, volume 1, 1979.
+	\end{thebibliography}
+\end{document}
